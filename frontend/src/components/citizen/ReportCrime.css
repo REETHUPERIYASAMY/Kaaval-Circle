@@ -1,1 +1,139 @@
 /* Report Crime Styles */
+/* src/components/citizen/ReportCrime.css */
+.report-crime-container {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  margin-top: 80px;
+}
+
+.report-crime-title {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #1a2a6c;
+}
+
+.report-crime-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+.report-crime-form {
+  background-color: white;
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #333;
+  font-weight: 500;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.evidence-count {
+  margin-top: 0.5rem;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.submit-button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s;
+}
+
+.submit-button:hover {
+  background-color: #45a049;
+}
+
+.submit-button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.report-crime-map {
+  background-color: white;
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.report-crime-map h3 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  color: #1a2a6c;
+}
+
+.map-container {
+  height: 400px;
+  width: 100%;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.map-placeholder {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #f5f5f5;
+  color: #666;
+}
+
+@media (max-width: 968px) {
+  .report-crime-content {
+    grid-template-columns: 1fr;
+  }
+  
+  .report-crime-map {
+    order: -1;
+  }
+  
+  .map-container {
+    height: 300px;
+  }
+}
+
+@media (max-width: 768px) {
+  .report-crime-container {
+    padding: 1rem;
+    margin-top: 60px;
+  }
+  
+  .report-crime-form {
+    padding: 1rem;
+  }
+  
+  .report-crime-map {
+    padding: 1rem;
+  }
+}

@@ -1,1 +1,66 @@
 /* Index Styles */
+/* src/index.css */
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+/* Custom styles */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+}
+
+input, textarea, select {
+  font-family: inherit;
+}
+
+/* Form styles */
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: #2196f3;
+  box-shadow: 0 0 0 2px rgba(33, 150, 243, 0.2);
+}
+
+/* Button styles */
+button:hover {
+  transition: all 0.3s ease;
+}
+
+/* Card styles */
+.stat-card, 
+.dashboard-actions, 
+.dashboard-recent, 
+.dashboard-sos, 
+.report-crime-form, 
+.report-crime-map,
+.sos-card,
+.police-dashboard-container > div {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.stat-card:hover, 
+.dashboard-actions:hover, 
+.dashboard-recent:hover, 
+.dashboard-sos:hover, 
+.report-crime-form:hover, 
+.report-crime-map:hover,
+.sos-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}

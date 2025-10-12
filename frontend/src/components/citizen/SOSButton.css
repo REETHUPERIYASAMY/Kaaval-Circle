@@ -1,1 +1,186 @@
-/* SOS Button Styles */
+/* src/components/citizen/SOSButton.css */
+.sos-container {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  margin-top: 80px;
+}
+
+.sos-title {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #1a2a6c;
+}
+
+.sos-content {
+  display: flex;
+  justify-content: center;
+}
+
+.sos-card {
+  background-color: white;
+  padding: 3rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  max-width: 600px;
+  width: 100%;
+}
+
+.sos-card-title {
+  margin-top: 0;
+  margin-bottom: 2rem;
+  color: #333;
+}
+
+.sos-button-main {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 1.5rem 3rem;
+  border-radius: 50px;
+  cursor: pointer;
+  font-size: 1.5rem;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(244, 67, 54, 0.3);
+}
+
+.sos-button-main:hover {
+  background-color: #d32f2f;
+  transform: scale(1.05);
+}
+
+.sos-button-main:active {
+  transform: scale(0.98);
+}
+
+.sos-error {
+  margin-top: 1rem;
+  color: #f44336;
+  font-weight: 500;
+}
+
+.sos-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.sos-modal-content {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 10px;
+  max-width: 500px;
+  width: 90%;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.sos-modal-title {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  color: #1a2a6c;
+  display: flex;
+  align-items: center;
+}
+
+.sos-modal-title::before {
+  content: "⚠️";
+  margin-right: 0.5rem;
+  font-size: 1.5rem;
+}
+
+.sos-modal-text {
+  margin-bottom: 1.5rem;
+  color: #333;
+  line-height: 1.5;
+}
+
+.sos-modal-map {
+  height: 300px;
+  width: 100%;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+}
+
+.map-placeholder {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #f5f5f5;
+  color: #666;
+}
+
+.sos-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+.sos-modal-cancel {
+  background-color: #f5f5f5;
+  color: #333;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.sos-modal-cancel:hover {
+  background-color: #e0e0e0;
+}
+
+.sos-modal-confirm {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.sos-modal-confirm:hover {
+  background-color: #d32f2f;
+}
+
+.sos-modal-confirm:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+  .sos-container {
+    padding: 1rem;
+    margin-top: 60px;
+  }
+  
+  .sos-card {
+    padding: 2rem;
+  }
+  
+  .sos-button-main {
+    padding: 1rem 2rem;
+    font-size: 1.2rem;
+  }
+  
+  .sos-modal-content {
+    padding: 1.5rem;
+  }
+  
+  .sos-modal-map {
+    height: 200px;
+  }
+}

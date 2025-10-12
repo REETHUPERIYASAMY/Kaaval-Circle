@@ -1,1 +1,172 @@
 /* Analytics Dashboard Styles */
+/* src/components/police/AnalyticsDashboard.css */
+.analytics-dashboard-container {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  margin-top: 80px;
+}
+
+.analytics-title {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #1a2a6c;
+}
+
+.dashboard-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.stat-card {
+  background-color: white;
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.stat-title {
+  margin: 0 0 1rem 0;
+  color: #333;
+  font-size: 1.2rem;
+}
+
+.stat-value {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #1a2a6c;
+  margin: 0;
+}
+
+.analytics-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+.analytics-map {
+  grid-column: 1 / -1;
+}
+
+.section-title {
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  color: #1a2a6c;
+}
+
+.map-container {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+}
+
+.map-placeholder {
+  height: 400px;
+  background-color: #f5f5f5;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #666;
+  border-radius: 4px;
+}
+
+.chart-container {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+}
+
+.chart-placeholder {
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.hotspot-list,
+.category-list,
+.trend-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.hotspot-item,
+.category-item,
+.trend-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid #eee;
+}
+
+.hotspot-item:last-child,
+.category-item:last-child,
+.trend-item:last-child {
+  border-bottom: none;
+}
+
+.hotspot-location,
+.category-name,
+.trend-month {
+  font-weight: 500;
+}
+
+.hotspot-count,
+.category-percent,
+.trend-count {
+  color: #666;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+  font-size: 1.2rem;
+  color: #1a2a6c;
+}
+
+@media (max-width: 968px) {
+  .analytics-content {
+    grid-template-columns: 1fr;
+  }
+  
+  .map-placeholder {
+    height: 300px;
+  }
+}
+
+@media (max-width: 768px) {
+  .analytics-dashboard-container {
+    padding: 1rem;
+    margin-top: 60px;
+  }
+  
+  .dashboard-stats {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+  
+  .stat-card {
+    padding: 1rem;
+  }
+  
+  .stat-value {
+    font-size: 1.5rem;
+  }
+  
+  .map-placeholder {
+    height: 250px;
+  }
+  
+  .chart-container {
+    padding: 1rem;
+  }
+}
