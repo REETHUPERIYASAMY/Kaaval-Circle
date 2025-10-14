@@ -16,11 +16,13 @@ const PrivateRoute = ({ children, userType }) => {
     );
   }
 
-  if (!isAuthenticated) {
+  // If not logged in, redirect to landing page
+  if (!isAuthenticated || !user) {
     return <Navigate to="/" replace />;
   }
 
-  if (userType && user.userType !== userType) {
+  // Check if user type matches route
+  if (userType && user?.userType !== userType) {
     return (
       <div className="private-route-unauthorized">
         <div className="unauthorized-icon">🚫</div>

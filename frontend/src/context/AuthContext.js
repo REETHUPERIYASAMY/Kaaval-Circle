@@ -1,3 +1,4 @@
+// src/context/AuthContext.js
 import React, { createContext, useState, useEffect } from 'react';
 import axios from 'axios';
 
@@ -8,13 +9,13 @@ const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  // ✅ Make loadUser accessible to all functions
+  // Load user from token
   const loadUser = async () => {
-    if (localStorage.token) {
-      axios.defaults.headers.common['x-auth-token'] = localStorage.token;
+    if (localStorage.getItem('token')) {
+      axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('token')}`;
       try {
         const res = await axios.get('http://localhost:5000/api/auth/me');
-        setUser(res.data.data);
+        setUser(res.data.data);  // make sure you use res.data.data as per your backend
         setIsAuthenticated(true);
       } catch (err) {
         localStorage.removeItem('token');
@@ -25,7 +26,6 @@ const AuthProvider = ({ children }) => {
     setLoading(false);
   };
 
-  // ✅ Load user on mount
   useEffect(() => {
     loadUser();
   }, []);
@@ -34,19 +34,10 @@ const AuthProvider = ({ children }) => {
     try {
       const res = await axios.post('http://localhost:5000/api/auth/register', formData);
       localStorage.setItem('token', res.data.token);
-      axios.defaults.headers.common['x-auth-token'] = res.data.token;
-
       await loadUser();
-
-      return {
-        success: true,
-        message: res.data.message || 'Registration successful'
-      };
+      return { success: true };
     } catch (err) {
-      return {
-        success: false,
-        message: err.response?.data?.message || 'Registration failed'
-      };
+      return { success: false, message: err.response?.data?.message || 'Registration failed' };
     }
   };
 
@@ -54,16 +45,10 @@ const AuthProvider = ({ children }) => {
     try {
       const res = await axios.post('http://localhost:5000/api/auth/login', formData);
       localStorage.setItem('token', res.data.token);
-      axios.defaults.headers.common['x-auth-token'] = res.data.token;
-
       await loadUser();
-
       return { success: true };
     } catch (err) {
-      return {
-        success: false,
-        message: err.response?.data?.message || 'Login failed'
-      };
+      return { success: false, message: err.response?.data?.message || 'Login failed' };
     }
   };
 
@@ -75,14 +60,7 @@ const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{
-        user,
-        isAuthenticated,
-        loading,
-        register,
-        login,
-        logout
-      }}
+      value={{ user, isAuthenticated, loading, register, login, logout }}
     >
       {children}
     </AuthContext.Provider>
