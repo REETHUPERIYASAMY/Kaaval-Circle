@@ -88,10 +88,11 @@ exports.login = async (req, res) => {
     // Check if user exists
     let user;
     if (userType === 'citizen') {
-      user = await User.findOne({ name: identifier, userType: 'citizen' });
-    } else {
-      user = await User.findOne({ batchNo: identifier, userType: 'police' });
-    }
+  user = await User.findOne({ name: identifier, userType: 'citizen' }).select('+password');
+} else {
+  user = await User.findOne({ batchNo: identifier, userType: 'police' }).select('+password');
+}
+
 
     console.log("Login data:", req.body);
     console.log("Found user:", user);
