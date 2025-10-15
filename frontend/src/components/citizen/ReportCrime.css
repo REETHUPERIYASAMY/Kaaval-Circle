@@ -5,98 +5,237 @@
   max-width: 1200px;
   margin: 0 auto;
   margin-top: 80px;
+  background-color: #5B80A4;
+  background-image: url('https://lh3.googleusercontent.com/gg-dl/AJfQ9KROcV7KbR6u7Skmjk5JWe-NFH4pAPHuH9t0T98rgMsTjZR7k5Bo18nCeuy6mfTfu7GfEYjo0Iap16RhjDbkRErNXp4FFEjFwUufIu2rZEwdlemKiO5XSAU_38bjk4BOR66Ld5VrKj4vUBHK9PelxuIIE3WPkNV6A8OagiExh4mQREbn=s1024-rj');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-blend-mode: overlay;
+  position: relative;
+  overflow: hidden;
+}
+
+.report-crime-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(91, 128, 164, 0.9), rgba(91, 128, 164, 0.7), rgba(91, 128, 164, 0.9));
+  background-size: 400% 400%;
+  animation: gradient 15s ease infinite;
+  z-index: 0;
+}
+
+@keyframes gradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 .report-crime-title {
   text-align: center;
   margin-bottom: 2rem;
-  color: #1a2a6c;
+  color: #34495E;
+  font-size: 2.2rem;
+  font-weight: 700;
+  position: relative;
+  z-index: 1;
+}
+
+.report-crime-title::after {
+  content: "";
+  display: block;
+  width: 80px;
+  height: 4px;
+  background: linear-gradient(to right, #34495E, #5B80A4);
+  margin: 0.8rem auto 0;
+  border-radius: 3px;
 }
 
 .report-crime-content {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 2rem;
+  position: relative;
+  z-index: 1;
 }
 
 .report-crime-form {
-  background-color: white;
-  padding: 1.5rem;
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background-color: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.report-crime-form::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 5px;
+  background: linear-gradient(to right, #34495E, #5B80A4);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+
+.report-crime-form:hover::before {
+  transform: scaleX(1);
 }
 
 .form-group {
   margin-bottom: 1.5rem;
+  position: relative;
 }
 
 .form-group label {
   display: block;
   margin-bottom: 0.5rem;
-  color: #333;
+  color: #34495E;
   font-weight: 500;
+  font-size: 0.9rem;
+  transition: color 0.3s ease;
 }
 
 .form-group input,
 .form-group textarea,
 .form-group select {
   width: 100%;
-  padding: 0.75rem;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+  padding: 0.9rem 1rem;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
   font-size: 1rem;
+  transition: all 0.3s ease;
+  background-color: #f9f9f9;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  border-color: #34495E;
+  background-color: white;
+  box-shadow: 0 0 0 3px rgba(52, 73, 94, 0.1);
+  outline: none;
 }
 
 .form-group textarea {
   resize: vertical;
   min-height: 100px;
+  font-family: inherit;
 }
 
 .evidence-count {
   margin-top: 0.5rem;
-  color: #666;
+  color: #5B80A4;
   font-size: 0.9rem;
+  font-weight: 500;
 }
 
 .submit-button {
-  background-color: #4caf50;
+  background: linear-gradient(to right, #4caf50, #5cbf60);
   color: white;
   border: none;
-  padding: 0.75rem 1.5rem;
-  border-radius: 4px;
+  padding: 0.9rem 1.5rem;
+  border-radius: 8px;
   cursor: pointer;
   font-size: 1rem;
-  transition: background-color 0.3s;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.submit-button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+.submit-button:hover::before {
+  left: 100%;
 }
 
 .submit-button:hover {
-  background-color: #45a049;
+  transform: translateY(-2px);
+  box-shadow: 0 7px 14px rgba(76, 175, 80, 0.3);
+}
+
+.submit-button:active {
+  transform: translateY(0);
+  box-shadow: 0 3px 8px rgba(76, 175, 80, 0.3);
 }
 
 .submit-button:disabled {
   background-color: #cccccc;
   cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
 }
 
 .report-crime-map {
-  background-color: white;
-  padding: 1.5rem;
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background-color: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.report-crime-map::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 5px;
+  background: linear-gradient(to right, #34495E, #5B80A4);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+
+.report-crime-map:hover::before {
+  transform: scaleX(1);
 }
 
 .report-crime-map h3 {
   margin-top: 0;
   margin-bottom: 1rem;
-  color: #1a2a6c;
+  color: #34495E;
+  font-size: 1.5rem;
+  font-weight: 600;
+  position: relative;
+}
+
+.report-crime-map h3::after {
+  content: "";
+  display: block;
+  width: 50px;
+  height: 3px;
+  background: linear-gradient(to right, #34495E, #5B80A4);
+  margin: 0.5rem 0 0;
+  border-radius: 3px;
 }
 
 .map-container {
   height: 400px;
   width: 100%;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
   overflow: hidden;
+  position: relative;
 }
 
 .map-placeholder {
@@ -107,6 +246,39 @@
   align-items: center;
   background-color: #f5f5f5;
   color: #666;
+  position: relative;
+}
+
+.map-placeholder::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/80.2707,13.0827,14/800x400@2x?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw');
+  background-size: cover;
+  background-position: center;
+  opacity: 0.8;
+}
+
+.map-placeholder > * {
+  position: relative;
+  z-index: 1;
+}
+
+.map-instructions {
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 1rem;
+  border-radius: 8px;
+  margin-top: 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.map-instructions p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #34495E;
 }
 
 @media (max-width: 968px) {
@@ -129,11 +301,19 @@
     margin-top: 60px;
   }
   
+  .report-crime-title {
+    font-size: 1.8rem;
+  }
+  
   .report-crime-form {
-    padding: 1rem;
+    padding: 1.5rem;
   }
   
   .report-crime-map {
-    padding: 1rem;
+    padding: 1.5rem;
+  }
+  
+  .map-container {
+    height: 250px;
   }
 }

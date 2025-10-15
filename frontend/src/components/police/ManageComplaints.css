@@ -5,19 +5,80 @@
   max-width: 1200px;
   margin: 0 auto;
   margin-top: 80px;
+  background-color: #5B80A4;
+  background-image: url('https://lh3.googleusercontent.com/gg-dl/AJfQ9KROcV7KbR6u7Skmjk5JWe-NFH4pAPHuH9t0T98rgMsTjZR7k5Bo18nCeuy6mfTfu7GfEYjo0Iap16RhjDbkRErNXp4FFEjFwUufIu2rZEwdlemKiO5XSAU_38bjk4BOR66Ld5VrKj4vUBHK9PelxuIIE3WPkNV6A8OagiExh4mQREbn=s1024-rj');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-blend-mode: overlay;
+  position: relative;
+  overflow: hidden;
+}
+
+.manage-complaints-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(91, 128, 164, 0.9), rgba(91, 128, 164, 0.7), rgba(91, 128, 164, 0.9));
+  background-size: 400% 400%;
+  animation: gradient 15s ease infinite;
+  z-index: 0;
+}
+
+@keyframes gradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 .manage-complaints-title {
   text-align: center;
   margin-bottom: 2rem;
-  color: #1a2a6c;
+  color: #34495E;
+  font-size: 2.2rem;
+  font-weight: 700;
+  position: relative;
+  z-index: 1;
+}
+
+.manage-complaints-title::after {
+  content: "";
+  display: block;
+  width: 80px;
+  height: 4px;
+  background: linear-gradient(to right, #34495E, #5B80A4);
+  margin: 0.8rem auto 0;
+  border-radius: 3px;
 }
 
 .complaints-table-container {
-  background-color: white;
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background-color: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.1);
   overflow: hidden;
+  position: relative;
+  z-index: 1;
+}
+
+.complaints-table-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 5px;
+  background: linear-gradient(to right, #34495E, #5B80A4);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+
+.complaints-table-container:hover::before {
+  transform: scaleX(1);
 }
 
 .complaints-table {
@@ -33,13 +94,28 @@
 }
 
 .complaints-table th {
-  background-color: #f5f5f5;
+  background-color: rgba(91, 128, 164, 0.1);
   font-weight: 600;
-  color: #333;
+  color: #34495E;
+  position: relative;
+}
+
+.complaints-table th::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(to right, #34495E, #5B80A4);
 }
 
 .complaints-table tr:hover {
-  background-color: #f9f9f9;
+  background-color: rgba(91, 128, 164, 0.05);
+}
+
+.complaints-table tr:hover td {
+  color: #34495E;
 }
 
 .status-badge {
@@ -47,36 +123,82 @@
   border-radius: 4px;
   font-size: 0.875rem;
   font-weight: 500;
+  position: relative;
+  overflow: hidden;
+}
+
+.status-badge::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
 }
 
 .warning {
-  background-color: #fff3cd;
+  background-color: rgba(255, 193, 7, 0.1);
   color: #856404;
 }
 
+.warning::before {
+  background-color: #ffc107;
+}
+
 .info {
-  background-color: #d1ecf1;
+  background-color: rgba(23, 162, 184, 0.1);
   color: #0c5460;
 }
 
+.info::before {
+  background-color: #17a2b8;
+}
+
 .success {
-  background-color: #d4edda;
+  background-color: rgba(40, 167, 69, 0.1);
   color: #155724;
 }
 
+.success::before {
+  background-color: #28a745;
+}
+
 .update-button {
-  background-color: #2196f3;
+  background: linear-gradient(to right, #34495E, #5B80A4);
   color: white;
   border: none;
   padding: 0.5rem 1rem;
-  border-radius: 4px;
+  border-radius: 8px;
   cursor: pointer;
   font-size: 0.875rem;
-  transition: background-color 0.3s;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.update-button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+.update-button:hover::before {
+  left: 100%;
 }
 
 .update-button:hover {
-  background-color: #0b7dda;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(52, 73, 94, 0.3);
+}
+
+.update-button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(52, 73, 94, 0.3);
 }
 
 .loading {
@@ -85,16 +207,37 @@
   align-items: center;
   height: 200px;
   font-size: 1.2rem;
-  color: #1a2a6c;
+  color: #34495E;
+  position: relative;
+  z-index: 1;
+}
+
+.loading::after {
+  content: "";
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  margin-left: 10px;
+  border: 2px solid #34495E;
+  border-radius: 50%;
+  border-top-color: transparent;
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
 }
 
 .empty-state {
-  background-color: white;
+  background-color: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
   padding: 3rem;
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 16px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.1);
   text-align: center;
   color: #666;
+  position: relative;
+  z-index: 1;
 }
 
 .dialog-overlay {
@@ -108,25 +251,44 @@
   justify-content: center;
   align-items: center;
   z-index: 1000;
+  backdrop-filter: blur(5px);
 }
 
 .dialog-content {
-  background-color: white;
+  background-color: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(10px);
   padding: 2rem;
-  border-radius: 10px;
+  border-radius: 16px;
   max-width: 500px;
   width: 90%;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3), 0 5px 15px rgba(0, 0, 0, 0.2);
+  position: relative;
+  overflow: hidden;
+  transform: translateY(0);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.dialog-content::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 5px;
+  background: linear-gradient(to right, #34495E, #5B80A4);
 }
 
 .dialog-title {
   margin-top: 0;
   margin-bottom: 1.5rem;
-  color: #1a2a6c;
+  color: #34495E;
+  font-size: 1.5rem;
+  font-weight: 600;
 }
 
 .dialog-body p {
   margin-bottom: 0.5rem;
+  color: #555;
 }
 
 .status-options {
@@ -137,30 +299,51 @@
   display: block;
   margin-bottom: 0.5rem;
   font-weight: 500;
+  color: #34495E;
 }
 
 .status-buttons {
   display: flex;
   gap: 0.5rem;
+  flex-wrap: wrap;
 }
 
 .status-button {
   padding: 0.5rem 1rem;
-  border: 1px solid #ddd;
+  border: 2px solid #e0e0e0;
   background-color: white;
-  border-radius: 4px;
+  border-radius: 8px;
   cursor: pointer;
-  transition: all 0.3s;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
 }
 
 .status-button:hover {
-  background-color: #f5f5f5;
+  border-color: #5B80A4;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(91, 128, 164, 0.2);
 }
 
 .status-button.active {
-  background-color: #2196f3;
+  background: linear-gradient(to right, #34495E, #5B80A4);
   color: white;
-  border-color: #2196f3;
+  border-color: #34495E;
+}
+
+.status-button.active::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+.status-button.active:hover::before {
+  left: 100%;
 }
 
 .dialog-actions {
@@ -175,38 +358,69 @@
   color: #333;
   border: none;
   padding: 0.75rem 1.5rem;
-  border-radius: 4px;
+  border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: all 0.3s ease;
 }
 
 .cancel-button:hover {
   background-color: #e0e0e0;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .confirm-button {
-  background-color: #4caf50;
+  background: linear-gradient(to right, #34495E, #5B80A4);
   color: white;
   border: none;
   padding: 0.75rem 1.5rem;
-  border-radius: 4px;
+  border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.confirm-button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+.confirm-button:hover::before {
+  left: 100%;
 }
 
 .confirm-button:hover {
-  background-color: #45a049;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(52, 73, 94, 0.3);
+}
+
+.confirm-button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(52, 73, 94, 0.3);
 }
 
 .confirm-button:disabled {
   background-color: #cccccc;
   cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
 }
 
 @media (max-width: 768px) {
   .manage-complaints-container {
     padding: 1rem;
     margin-top: 60px;
+  }
+  
+  .manage-complaints-title {
+    font-size: 1.8rem;
   }
   
   .complaints-table-container {
@@ -223,5 +437,14 @@
   
   .status-buttons {
     flex-direction: column;
+  }
+  
+  .dialog-actions {
+    flex-direction: column-reverse;
+  }
+  
+  .cancel-button,
+  .confirm-button {
+    width: 100%;
   }
 }
