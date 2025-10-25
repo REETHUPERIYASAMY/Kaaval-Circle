@@ -36,7 +36,7 @@ const PoliceProfile = () => {
 
           <div className="detail-row">
             <div className="detail-label">Station</div>
-            <div className="detail-value">{user.stationName}</div>
+            <div className="detail-value">{user.station}</div>
           </div>
 
           <div className="detail-row">
