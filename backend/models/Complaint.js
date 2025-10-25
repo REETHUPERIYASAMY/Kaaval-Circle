@@ -14,7 +14,16 @@ const ComplaintSchema = new mongoose.Schema({
   category: {
     type: String,
     required: [true, 'Please select a category'],
-    enum: ['Theft', 'Assault', 'Vandalism', 'Domestic Violence', 'Other'],
+    enum: [
+      'Theft',
+      'Assault',
+      'Vandalism',
+      'Domestic Violence',
+      'Fraud',
+      'Harassment',
+      'Missing Person',
+      'Other',
+    ],
   },
   location: {
     type: {
@@ -54,5 +63,8 @@ const ComplaintSchema = new mongoose.Schema({
     default: Date.now,
   },
 });
+
+// Geospatial index for location
+ComplaintSchema.index({ location: '2dsphere' });
 
 module.exports = mongoose.model('Complaint', ComplaintSchema);
