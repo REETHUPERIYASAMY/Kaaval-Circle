@@ -62,8 +62,8 @@ export const updateComplaintStatus = async (id, status) => {
 };
 
 // SOS API
-export const createSOSAlert = async (locationData) => {
-  const response = await api.post('/sos', { location: locationData });
+export const createSOSAlert = async (data) => {
+  const response = await api.post('/sos',data);
   return response.data;
 };
 
