@@ -1,7 +1,7 @@
 /* src/components/auth/CitizenRegister.css */
 .register-container {
   display: flex;
-  justify-content: flex-end; /* Changed from center to flex-end */
+  justify-content: flex-end;
   align-items: center;
   min-height: 100vh;
   background-color: #5B80A4;
@@ -10,66 +10,77 @@
   background-position: center;
   background-repeat: no-repeat;
   background-attachment: fixed;
-  padding: 1rem;
+  padding: 0;
   position: relative;
   overflow: hidden;
+  height: 100vh;
+  width: 100vw;
 }
 
 .register-form {
   background-color: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(10px);
-  padding: 1.5rem; /* Increased padding for cleaner look */
+  padding: 1.8rem;
   border-radius: 12px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15), 0 5px 10px rgba(0, 0, 0, 0.05);
-  width: 100%;
-  max-width: 420px; /* Increased from 360px to 420px */
+  width: 420px;
   position: fixed;
   top: 50%;
-  right: 1.5rem; /* Changed from left: 50% to right: 1.5rem */
-  transform: translateY(-50%); /* Removed translateX to keep it on the right */
+  right: 3rem;
+  transform: translateY(-50%);
   z-index: 1000;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   height: auto;
   max-height: 90vh;
-  overflow: hidden;
-}
-
-/* Compact version styles */
-.register-form.compact {
-  padding: 1.2rem; /* Increased padding for better spacing */
-  max-width: 380px; /* Increased from 320px to 380px */
-  max-height: 85vh;
   overflow-y: auto;
   overflow-x: hidden;
 }
 
+/* Compact version styles */
+.register-form.compact {
+  padding: 1.5rem;
+  width: 380px;
+  max-height: 85vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  /* Hide scrollbar for Firefox */
+  scrollbar-width: none;
+  /* Hide scrollbar for IE/Edge */
+  -ms-overflow-style: none;
+}
+
+/* Hide scrollbar for Chrome, Safari, Edge */
+.register-form.compact::-webkit-scrollbar {
+  display: none;
+}
+
 .register-form:hover {
-  transform: translateY(-50%) translateX(-3px); /* Added translateX for hover effect */
+  transform: translateY(-50%) translateX(-3px);
   box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
 .register-form.compact:hover {
-  transform: translateY(-50%) translateX(-2px); /* Added translateX for hover effect */
+  transform: translateY(-50%) translateX(-2px);
 }
 
 .register-title {
   text-align: center;
-  margin-bottom: 1.5rem; /* Increased margin for better spacing */
+  margin-bottom: 1.8rem;
   color: #34495E;
-  font-size: 1.4rem;
+  font-size: 1.6rem;
   font-weight: 700;
   position: relative;
 }
 
 .register-form.compact .register-title {
-  font-size: 1.1rem;
-  margin-bottom: 1.2rem; /* Increased margin for compact version */
+  font-size: 1.4rem;
+  margin-bottom: 1.5rem;
 }
 
 .register-title::after {
   content: "";
   display: block;
-  width: 40px;
+  width: 60px;
   height: 3px;
   background: linear-gradient(to right, #34495E, #5B80A4);
   margin: 0.6rem auto 0;
@@ -77,42 +88,126 @@
 }
 
 .register-form.compact .register-title::after {
-  width: 30px;
+  width: 50px;
   height: 2px;
-  margin: 0.4rem auto 0;
+  margin: 0.5rem auto 0;
+}
+
+/* Step Indicators */
+.step-indicators {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.step {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: #e0e0e0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 5px;
+  font-weight: 600;
+  color: #999;
+  position: relative;
+}
+
+.step.active {
+  background-color: #5B80A4;
+  color: white;
+}
+
+.step.active::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 100%;
+  width: 35px;
+  height: 2px;
+  background-color: #5B80A4;
+  z-index: -1;
+}
+
+.step:last-child::after {
+  display: none;
+}
+
+/* Step Content */
+.step-content {
+  min-height: 200px;
+}
+
+.step-title {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #34495E;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.step-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1.5rem;
+}
+
+.prev-button, .next-button {
+  background: linear-gradient(to right, #34495E, #5B80A4);
+  color: white;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.prev-button:hover, .next-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 10px rgba(52, 73, 94, 0.3);
+}
+
+.prev-button:disabled, .next-button:disabled {
+  background: #cccccc;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
 }
 
 .form-group {
-  margin-bottom: 1.2rem; /* Increased margin for consistent spacing */
+  margin-bottom: 1.2rem;
   position: relative;
 }
 
 .register-form.compact .form-group {
-  margin-bottom: 1rem; /* Increased margin for compact version */
+  margin-bottom: 1rem;
 }
 
 .form-group label {
   display: block;
-  margin-bottom: 0.5rem; /* Increased margin for better spacing */
+  margin-bottom: 0.5rem;
   color: #333;
   font-weight: 500;
-  font-size: 0.85rem;
+  font-size: 0.95rem;
   transition: color 0.3s ease;
 }
 
 .register-form.compact .form-group label {
-  font-size: 0.75rem;
-  margin-bottom: 0.4rem; /* Increased margin for compact version */
+  font-size: 0.85rem;
+  margin-bottom: 0.4rem;
 }
 
 .form-group input,
 .form-group textarea,
 .form-group select {
   width: 100%;
-  padding: 0.8rem 1rem; /* Increased padding for cleaner look */
+  padding: 0.8rem 1rem;
   border: 2px solid #e0e0e0;
-  border-radius: 6px;
-  font-size: 0.9rem;
+  border-radius: 8px;
+  font-size: 0.95rem;
   transition: all 0.3s ease;
   background-color: #f9f9f9;
 }
@@ -120,37 +215,37 @@
 .register-form.compact .form-group input,
 .register-form.compact .form-group textarea,
 .register-form.compact .form-group select {
-  padding: 0.6rem 0.8rem; /* Increased padding for compact version */
-  font-size: 0.8rem;
-  border-radius: 4px;
+  padding: 0.7rem 0.9rem;
+  font-size: 0.9rem;
+  border-radius: 6px;
 }
 
 .form-group input:focus,
 .form-group textarea:focus,
 .form-group select:focus {
-  border-color: #34495E;
+  border-color: #5B80A4;
   background-color: white;
-  box-shadow: 0 0 0 2px rgba(52, 73, 94, 0.1);
+  box-shadow: 0 0 0 2px rgba(91, 128, 164, 0.2);
   outline: none;
 }
 
 .form-group textarea {
   resize: vertical;
-  min-height: 60px;
+  min-height: 70px;
   font-family: inherit;
 }
 
 .register-form.compact .form-group textarea {
-  min-height: 50px; /* Increased height for compact version */
+  min-height: 60px;
 }
 
 .form-row {
   display: flex;
-  gap: 1rem; /* Increased gap for better spacing */
+  gap: 1.2rem;
 }
 
 .register-form.compact .form-row {
-  gap: 0.8rem; /* Increased gap for compact version */
+  gap: 1rem;
 }
 
 .form-row .form-group {
@@ -160,41 +255,39 @@
 .input-icon {
   position: absolute;
   right: 10px;
-  top: 32px;
+  top: 34px;
   color: #999;
   transition: color 0.3s ease;
 }
 
 .register-form.compact .input-icon {
-  top: 28px;
+  top: 30px;
   right: 8px;
 }
 
 .form-group input:focus + .input-icon {
-  color: #34495E;
+  color: #5B80A4;
 }
 
 .register-button {
   background: linear-gradient(to right, #34495E, #5B80A4);
   color: white;
   border: none;
-  padding: 0.8rem; /* Increased padding for cleaner look */
-  border-radius: 6px;
+  padding: 0.9rem;
+  border-radius: 8px;
   cursor: pointer;
-  font-size: 0.9rem;
+  font-size: 1rem;
   font-weight: 600;
   width: 100%;
-  margin-top: 1.2rem; /* Increased margin for better spacing */
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
 }
 
 .register-form.compact .register-button {
-  padding: 0.6rem; /* Increased padding for compact version */
-  font-size: 0.8rem;
-  margin-top: 1rem; /* Increased margin for compact version */
-  border-radius: 4px;
+  padding: 0.8rem;
+  font-size: 0.95rem;
+  border-radius: 6px;
 }
 
 .register-button::before {
@@ -229,14 +322,14 @@
 
 .register-login {
   text-align: center;
-  margin-top: 1.5rem; /* Increased margin to move login link lower */
-  font-size: 0.8rem;
+  margin-top: 1.8rem;
+  font-size: 0.9rem;
   color: #555;
 }
 
 .register-form.compact .register-login {
-  margin-top: 1.2rem; /* Increased margin for compact version */
-  font-size: 0.7rem;
+  margin-top: 1.5rem;
+  font-size: 0.8rem;
 }
 
 .register-login a {
@@ -281,7 +374,7 @@
   color: #b21f1f;
   font-size: 0.8rem;
   margin-top: 0.4rem;
-  display: none;
+  display: block;
 }
 
 .register-form.compact .error-message {
@@ -361,7 +454,7 @@
 }
 
 .register-form.compact .terms-checkbox {
-  margin-bottom: 0.6rem;
+  margin-bottom: 0.8rem;
 }
 
 .terms-checkbox input[type="checkbox"] {
@@ -396,22 +489,125 @@
   text-decoration: underline;
 }
 
+/* Photo Upload Styles - Properly aligned and compact */
+.photo-upload {
+  margin-bottom: 1.2rem;
+  text-align: center;
+}
+
+.register-form.compact .photo-upload {
+  margin-bottom: 1rem;
+}
+
+.photo-upload-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #333;
+  font-weight: 500;
+  font-size: 0.95rem;
+  text-align: left;
+}
+
+.register-form.compact .photo-upload-label {
+  font-size: 0.85rem;
+  margin-bottom: 0.4rem;
+}
+
+.photo-upload-container {
+  position: relative;
+  display: inline-block;
+  width: 100px;
+  height: 100px;
+  border: 2px dashed #ccc;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: #f9f9f9;
+  transition: all 0.3s ease;
+  margin: 0 auto;
+}
+
+.register-form.compact .photo-upload-container {
+  width: 90px;
+  height: 90px;
+}
+
+.photo-upload-container:hover {
+  border-color: #5B80A4;
+  background-color: #f0f5ff;
+}
+
+.photo-upload-input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.photo-preview {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: none;
+}
+
+.photo-placeholder {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #888;
+  z-index: 1;
+}
+
+.photo-placeholder-icon {
+  font-size: 1.8rem;
+  margin-bottom: 0.3rem;
+}
+
+.photo-placeholder-text {
+  font-size: 0.7rem;
+}
+
+.register-form.compact .photo-placeholder-icon {
+  font-size: 1.5rem;
+  margin-bottom: 0.2rem;
+}
+
+.register-form.compact .photo-placeholder-text {
+  font-size: 0.65rem;
+}
+
 /* Media queries for fixed positioning */
 @media (max-width: 768px) {
+  .register-container {
+    padding: 0;
+  }
+  
   .register-form {
     position: fixed;
     top: 50%;
-    left: 50%; /* Changed back to center for mobile */
+    left: 50%;
     transform: translate(-50%, -50%);
     right: auto;
-    max-width: 85%; /* Adjusted for better mobile view */
-    padding: 1.2rem; /* Increased padding for mobile */
+    width: 85%;
+    max-width: 420px;
+    padding: 1.5rem;
     max-height: 80vh;
   }
   
   .register-form.compact {
-    max-width: 80%; /* Adjusted for better mobile view */
-    padding: 1rem; /* Increased padding for mobile */
+    width: 80%;
+    max-width: 380px;
+    padding: 1.2rem;
     max-height: 75vh;
   }
   
@@ -424,11 +620,11 @@
   }
   
   .register-title {
-    font-size: 1.2rem;
+    font-size: 1.4rem;
   }
   
   .register-form.compact .register-title {
-    font-size: 1rem;
+    font-size: 1.2rem;
   }
   
   .form-row {
@@ -439,90 +635,90 @@
 
 @media (max-width: 480px) {
   .register-form {
-    padding: 1rem; /* Increased padding for small screens */
-    max-width: 90%;
+    padding: 1.2rem;
+    width: 90%;
     max-height: 85vh;
   }
   
   .register-form.compact {
-    padding: 0.8rem; /* Increased padding for small screens */
-    max-width: 85%;
+    padding: 1rem;
+    width: 85%;
     max-height: 80vh;
   }
   
   .register-title {
-    font-size: 1.1rem;
+    font-size: 1.3rem;
   }
   
   .register-form.compact .register-title {
-    font-size: 0.9rem;
+    font-size: 1.1rem;
   }
   
   .form-group input,
   .form-group textarea,
   .form-group select {
-    padding: 0.7rem 0.9rem; /* Increased padding for small screens */
-    font-size: 0.85rem;
+    padding: 0.7rem 0.9rem;
+    font-size: 0.9rem;
   }
   
   .register-form.compact .form-group input,
   .register-form.compact .form-group textarea,
   .register-form.compact .form-group select {
-    padding: 0.5rem 0.7rem; /* Increased padding for small screens */
-    font-size: 0.75rem;
-  }
-  
-  .register-button {
-    padding: 0.7rem; /* Increased padding for small screens */
+    padding: 0.6rem 0.8rem;
     font-size: 0.85rem;
   }
   
+  .register-button {
+    padding: 0.8rem;
+    font-size: 0.9rem;
+  }
+  
   .register-form.compact .register-button {
-    padding: 0.5rem; /* Increased padding for small screens */
-    font-size: 0.75rem;
+    padding: 0.7rem;
+    font-size: 0.85rem;
   }
 }
 
 @media (max-width: 360px) {
   .register-form {
-    padding: 0.9rem; /* Increased padding for very small screens */
-    max-width: 95%;
+    padding: 1rem;
+    width: 95%;
   }
   
   .register-form.compact {
-    padding: 0.7rem; /* Increased padding for very small screens */
-    max-width: 90%;
+    padding: 0.8rem;
+    width: 90%;
   }
   
   .register-title {
-    font-size: 1rem;
+    font-size: 1.2rem;
   }
   
   .register-form.compact .register-title {
-    font-size: 0.85rem;
+    font-size: 1rem;
   }
   
   .form-group input,
   .form-group textarea,
   .form-group select {
-    padding: 0.6rem 0.8rem; /* Increased padding for very small screens */
-    font-size: 0.8rem;
+    padding: 0.6rem 0.8rem;
+    font-size: 0.85rem;
   }
   
   .register-form.compact .form-group input,
   .register-form.compact .form-group textarea,
   .register-form.compact .form-group select {
-    padding: 0.4rem 0.6rem; /* Increased padding for very small screens */
-    font-size: 0.7rem;
-  }
-  
-  .register-button {
-    padding: 0.6rem; /* Increased padding for very small screens */
+    padding: 0.5rem 0.7rem;
     font-size: 0.8rem;
   }
   
+  .register-button {
+    padding: 0.7rem;
+    font-size: 0.85rem;
+  }
+  
   .register-form.compact .register-button {
-    padding: 0.4rem; /* Increased padding for very small screens */
-    font-size: 0.7rem;
+    padding: 0.6rem;
+    font-size: 0.8rem;
   }
 }
