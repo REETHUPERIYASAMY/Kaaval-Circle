@@ -1,4 +1,3 @@
-/* Citizen Register Styles */
 /* src/components/auth/CitizenRegister.css */
 .register-container {
   display: flex;
@@ -10,6 +9,7 @@
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  background-attachment: fixed;
   padding: 1rem;
   position: relative;
   overflow: hidden;
@@ -18,66 +18,111 @@
 .register-form {
   background-color: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(10px);
-  padding: 2.5rem;
-  border-radius: 16px;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem; /* Increased padding for cleaner look */
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15), 0 5px 10px rgba(0, 0, 0, 0.05);
   width: 100%;
-  max-width: 550px;
-  position: relative;
-  z-index: 1;
-  transform: translateY(0);
+  max-width: 420px; /* Increased from 360px to 420px */
+  position: fixed;
+  top: 50%;
+  right: 1.5rem; /* Changed from left: 50% to right: 1.5rem */
+  transform: translateY(-50%); /* Removed translateX to keep it on the right */
+  z-index: 1000;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  margin-right: 2rem; /* Added some margin from the right edge */
+  height: auto;
+  max-height: 90vh;
+  overflow: hidden;
+}
+
+/* Compact version styles */
+.register-form.compact {
+  padding: 1.2rem; /* Increased padding for better spacing */
+  max-width: 380px; /* Increased from 320px to 380px */
+  max-height: 85vh;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .register-form:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25), 0 10px 20px rgba(0, 0, 0, 0.15);
+  transform: translateY(-50%) translateX(-3px); /* Added translateX for hover effect */
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.register-form.compact:hover {
+  transform: translateY(-50%) translateX(-2px); /* Added translateX for hover effect */
 }
 
 .register-title {
   text-align: center;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem; /* Increased margin for better spacing */
   color: #34495E;
-  font-size: 1.8rem;
+  font-size: 1.4rem;
   font-weight: 700;
   position: relative;
+}
+
+.register-form.compact .register-title {
+  font-size: 1.1rem;
+  margin-bottom: 1.2rem; /* Increased margin for compact version */
 }
 
 .register-title::after {
   content: "";
   display: block;
-  width: 50px;
+  width: 40px;
   height: 3px;
   background: linear-gradient(to right, #34495E, #5B80A4);
-  margin: 0.8rem auto 0;
+  margin: 0.6rem auto 0;
   border-radius: 3px;
 }
 
+.register-form.compact .register-title::after {
+  width: 30px;
+  height: 2px;
+  margin: 0.4rem auto 0;
+}
+
 .form-group {
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.2rem; /* Increased margin for consistent spacing */
   position: relative;
+}
+
+.register-form.compact .form-group {
+  margin-bottom: 1rem; /* Increased margin for compact version */
 }
 
 .form-group label {
   display: block;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.5rem; /* Increased margin for better spacing */
   color: #333;
   font-weight: 500;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   transition: color 0.3s ease;
+}
+
+.register-form.compact .form-group label {
+  font-size: 0.75rem;
+  margin-bottom: 0.4rem; /* Increased margin for compact version */
 }
 
 .form-group input,
 .form-group textarea,
 .form-group select {
   width: 100%;
-  padding: 0.9rem 1rem;
+  padding: 0.8rem 1rem; /* Increased padding for cleaner look */
   border: 2px solid #e0e0e0;
-  border-radius: 8px;
-  font-size: 1rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
   transition: all 0.3s ease;
   background-color: #f9f9f9;
+}
+
+.register-form.compact .form-group input,
+.register-form.compact .form-group textarea,
+.register-form.compact .form-group select {
+  padding: 0.6rem 0.8rem; /* Increased padding for compact version */
+  font-size: 0.8rem;
+  border-radius: 4px;
 }
 
 .form-group input:focus,
@@ -85,19 +130,27 @@
 .form-group select:focus {
   border-color: #34495E;
   background-color: white;
-  box-shadow: 0 0 0 3px rgba(52, 73, 94, 0.1);
+  box-shadow: 0 0 0 2px rgba(52, 73, 94, 0.1);
   outline: none;
 }
 
 .form-group textarea {
   resize: vertical;
-  min-height: 100px;
+  min-height: 60px;
   font-family: inherit;
+}
+
+.register-form.compact .form-group textarea {
+  min-height: 50px; /* Increased height for compact version */
 }
 
 .form-row {
   display: flex;
-  gap: 1rem;
+  gap: 1rem; /* Increased gap for better spacing */
+}
+
+.register-form.compact .form-row {
+  gap: 0.8rem; /* Increased gap for compact version */
 }
 
 .form-row .form-group {
@@ -106,10 +159,15 @@
 
 .input-icon {
   position: absolute;
-  right: 12px;
-  top: 38px;
+  right: 10px;
+  top: 32px;
   color: #999;
   transition: color 0.3s ease;
+}
+
+.register-form.compact .input-icon {
+  top: 28px;
+  right: 8px;
 }
 
 .form-group input:focus + .input-icon {
@@ -120,16 +178,23 @@
   background: linear-gradient(to right, #34495E, #5B80A4);
   color: white;
   border: none;
-  padding: 0.9rem;
-  border-radius: 8px;
+  padding: 0.8rem; /* Increased padding for cleaner look */
+  border-radius: 6px;
   cursor: pointer;
-  font-size: 1rem;
+  font-size: 0.9rem;
   font-weight: 600;
   width: 100%;
-  margin-top: 1.5rem;
+  margin-top: 1.2rem; /* Increased margin for better spacing */
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
+}
+
+.register-form.compact .register-button {
+  padding: 0.6rem; /* Increased padding for compact version */
+  font-size: 0.8rem;
+  margin-top: 1rem; /* Increased margin for compact version */
+  border-radius: 4px;
 }
 
 .register-button::before {
@@ -149,19 +214,29 @@
 
 .register-button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 7px 14px rgba(52, 73, 94, 0.3);
+  box-shadow: 0 5px 10px rgba(52, 73, 94, 0.3);
+}
+
+.register-form.compact .register-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 3px 6px rgba(52, 73, 94, 0.3);
 }
 
 .register-button:active {
   transform: translateY(0);
-  box-shadow: 0 3px 8px rgba(52, 73, 94, 0.3);
+  box-shadow: 0 2px 5px rgba(52, 73, 94, 0.3);
 }
 
 .register-login {
   text-align: center;
-  margin-top: 1.5rem;
-  font-size: 0.9rem;
+  margin-top: 1.5rem; /* Increased margin to move login link lower */
+  font-size: 0.8rem;
   color: #555;
+}
+
+.register-form.compact .register-login {
+  margin-top: 1.2rem; /* Increased margin for compact version */
+  font-size: 0.7rem;
 }
 
 .register-login a {
@@ -192,16 +267,26 @@
 }
 
 .form-hint {
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   color: #666;
-  margin-top: 0.3rem;
+  margin-top: 0.2rem;
+}
+
+.register-form.compact .form-hint {
+  font-size: 0.65rem;
+  margin-top: 0.1rem;
 }
 
 .error-message {
   color: #b21f1f;
-  font-size: 0.85rem;
-  margin-top: 0.5rem;
+  font-size: 0.8rem;
+  margin-top: 0.4rem;
   display: none;
+}
+
+.register-form.compact .error-message {
+  font-size: 0.7rem;
+  margin-top: 0.2rem;
 }
 
 .form-group.error input,
@@ -217,11 +302,18 @@
 .success-message {
   background-color: #e8f5e9;
   color: #2e7d32;
-  padding: 0.75rem;
-  border-radius: 8px;
-  margin-bottom: 1rem;
+  padding: 0.6rem;
+  border-radius: 6px;
+  margin-bottom: 0.8rem;
   display: none;
   text-align: center;
+  font-size: 0.85rem;
+}
+
+.register-form.compact .success-message {
+  padding: 0.4rem;
+  font-size: 0.75rem;
+  margin-bottom: 0.5rem;
 }
 
 .form-group.success input {
@@ -229,11 +321,16 @@
 }
 
 .password-strength {
-  height: 5px;
-  border-radius: 3px;
-  margin-top: 0.5rem;
+  height: 4px;
+  border-radius: 2px;
+  margin-top: 0.4rem;
   background-color: #e0e0e0;
   overflow: hidden;
+}
+
+.register-form.compact .password-strength {
+  height: 3px;
+  margin-top: 0.2rem;
 }
 
 .password-strength-bar {
@@ -260,20 +357,34 @@
 .terms-checkbox {
   display: flex;
   align-items: flex-start;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.register-form.compact .terms-checkbox {
+  margin-bottom: 0.6rem;
 }
 
 .terms-checkbox input[type="checkbox"] {
-  margin-right: 0.5rem;
-  margin-top: 0.2rem;
+  margin-right: 0.4rem;
+  margin-top: 0.15rem;
   width: auto;
+}
+
+.register-form.compact .terms-checkbox input[type="checkbox"] {
+  margin-right: 0.3rem;
+  margin-top: 0.1rem;
 }
 
 .terms-checkbox label {
   margin-bottom: 0;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   color: #555;
-  line-height: 1.4;
+  line-height: 1.3;
+}
+
+.register-form.compact .terms-checkbox label {
+  font-size: 0.7rem;
+  line-height: 1.2;
 }
 
 .terms-checkbox a {
@@ -285,19 +396,39 @@
   text-decoration: underline;
 }
 
+/* Media queries for fixed positioning */
 @media (max-width: 768px) {
-  .register-container {
-    justify-content: center; /* Center on mobile devices */
+  .register-form {
+    position: fixed;
+    top: 50%;
+    left: 50%; /* Changed back to center for mobile */
+    transform: translate(-50%, -50%);
+    right: auto;
+    max-width: 85%; /* Adjusted for better mobile view */
+    padding: 1.2rem; /* Increased padding for mobile */
+    max-height: 80vh;
   }
   
-  .register-form {
-    padding: 2rem;
-    margin: 1rem;
-    margin-right: 1rem; /* Adjusted margin for mobile */
+  .register-form.compact {
+    max-width: 80%; /* Adjusted for better mobile view */
+    padding: 1rem; /* Increased padding for mobile */
+    max-height: 75vh;
+  }
+  
+  .register-form:hover {
+    transform: translate(-50%, -50%);
+  }
+  
+  .register-form.compact:hover {
+    transform: translate(-50%, -50%);
   }
   
   .register-title {
-    font-size: 1.6rem;
+    font-size: 1.2rem;
+  }
+  
+  .register-form.compact .register-title {
+    font-size: 1rem;
   }
   
   .form-row {
@@ -308,10 +439,90 @@
 
 @media (max-width: 480px) {
   .register-form {
-    padding: 1.5rem;
+    padding: 1rem; /* Increased padding for small screens */
+    max-width: 90%;
+    max-height: 85vh;
+  }
+  
+  .register-form.compact {
+    padding: 0.8rem; /* Increased padding for small screens */
+    max-width: 85%;
+    max-height: 80vh;
   }
   
   .register-title {
-    font-size: 1.4rem;
+    font-size: 1.1rem;
+  }
+  
+  .register-form.compact .register-title {
+    font-size: 0.9rem;
+  }
+  
+  .form-group input,
+  .form-group textarea,
+  .form-group select {
+    padding: 0.7rem 0.9rem; /* Increased padding for small screens */
+    font-size: 0.85rem;
+  }
+  
+  .register-form.compact .form-group input,
+  .register-form.compact .form-group textarea,
+  .register-form.compact .form-group select {
+    padding: 0.5rem 0.7rem; /* Increased padding for small screens */
+    font-size: 0.75rem;
+  }
+  
+  .register-button {
+    padding: 0.7rem; /* Increased padding for small screens */
+    font-size: 0.85rem;
+  }
+  
+  .register-form.compact .register-button {
+    padding: 0.5rem; /* Increased padding for small screens */
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .register-form {
+    padding: 0.9rem; /* Increased padding for very small screens */
+    max-width: 95%;
+  }
+  
+  .register-form.compact {
+    padding: 0.7rem; /* Increased padding for very small screens */
+    max-width: 90%;
+  }
+  
+  .register-title {
+    font-size: 1rem;
+  }
+  
+  .register-form.compact .register-title {
+    font-size: 0.85rem;
+  }
+  
+  .form-group input,
+  .form-group textarea,
+  .form-group select {
+    padding: 0.6rem 0.8rem; /* Increased padding for very small screens */
+    font-size: 0.8rem;
+  }
+  
+  .register-form.compact .form-group input,
+  .register-form.compact .form-group textarea,
+  .register-form.compact .form-group select {
+    padding: 0.4rem 0.6rem; /* Increased padding for very small screens */
+    font-size: 0.7rem;
+  }
+  
+  .register-button {
+    padding: 0.6rem; /* Increased padding for very small screens */
+    font-size: 0.8rem;
+  }
+  
+  .register-form.compact .register-button {
+    padding: 0.4rem; /* Increased padding for very small screens */
+    font-size: 0.7rem;
   }
 }
