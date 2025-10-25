@@ -1,35 +1,45 @@
 // src/components/auth/CitizenRegister.js
-import React, { useState, useContext } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { AuthContext } from '../../context/AuthContext';
-import './CitizenRegister.css';
+import React, { useState, useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../../context/AuthContext";
+import "./CitizenRegister.css";
 
 const CitizenRegister = () => {
   const [formData, setFormData] = useState({
-    name: '',
-    phone: '',
-    address: '',
-    age: '',
-    aadharNo: '',
-    gender: '',
-    password: '',
-    confirmPassword: ''
+    name: "",
+    phone: "",
+    address: "",
+    age: "",
+    aadharNo: "",
+    gender: "",
+    password: "",
+    confirmPassword: "",
   });
 
   const { register } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  const { name, phone, address, age, aadharNo, gender, password, confirmPassword } = formData;
+  const {
+    name,
+    phone,
+    address,
+    age,
+    aadharNo,
+    gender,
+    password,
+    confirmPassword,
+  } = formData;
 
-  const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
+  const onChange = (e) =>
+    setFormData({ ...formData, [e.target.name]: e.target.value });
 
-  const onSubmit = async e => {
+  const onSubmit = async (e) => {
     e.preventDefault();
     if (password !== confirmPassword) {
-      alert('Passwords do not match');
+      alert("Passwords do not match");
       return;
     }
-    
+
     const result = await register({
       name,
       phone,
@@ -38,11 +48,11 @@ const CitizenRegister = () => {
       aadharNo,
       gender,
       password,
-      userType: 'citizen'
+      userType: "citizen",
     });
 
     if (result.success) {
-      navigate('/citizen-dashboard');
+      navigate("/citizen-dashboard");
     } else {
       alert(result.message);
     }
@@ -50,7 +60,7 @@ const CitizenRegister = () => {
 
   return (
     <div className="register-container">
-      <div className="register-form">
+      <div className="register-form compact">
         <h2 className="register-title">Citizen Registration</h2>
         <form onSubmit={onSubmit}>
           <div className="form-group">
@@ -64,9 +74,9 @@ const CitizenRegister = () => {
               required
             />
           </div>
-          
+
           <div className="form-group">
-            <label htmlFor="phone">Phone Number</label>
+            <label htmlFor="phone">Phone</label>
             <input
               type="tel"
               id="phone"
@@ -76,7 +86,7 @@ const CitizenRegister = () => {
               required
             />
           </div>
-          
+
           <div className="form-group">
             <label htmlFor="address">Address</label>
             <textarea
@@ -87,21 +97,40 @@ const CitizenRegister = () => {
               required
             ></textarea>
           </div>
-          
-          <div className="form-group">
-            <label htmlFor="age">Age</label>
-            <input
-              type="number"
-              id="age"
-              name="age"
-              value={age}
-              onChange={onChange}
-              required
-            />
+
+          {/* Age and Gender on the same line */}
+          <div className="form-row">
+            <div className="form-group">
+              <label htmlFor="age">Age</label>
+              <input
+                type="number"
+                id="age"
+                name="age"
+                value={age}
+                onChange={onChange}
+                required
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="gender">Gender</label>
+              <select
+                id="gender"
+                name="gender"
+                value={gender}
+                onChange={onChange}
+                required
+              >
+                <option value="">Select</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
           </div>
-          
+
           <div className="form-group">
-            <label htmlFor="aadharNo">Aadhar Number</label>
+            <label htmlFor="aadharNo">Aadhar</label>
             <input
               type="text"
               id="aadharNo"
@@ -111,23 +140,7 @@ const CitizenRegister = () => {
               required
             />
           </div>
-          
-          <div className="form-group">
-            <label htmlFor="gender">Gender</label>
-            <select
-              id="gender"
-              name="gender"
-              value={gender}
-              onChange={onChange}
-              required
-            >
-              <option value="">Select Gender</option>
-              <option value="Male">Male</option>
-              <option value="Female">Female</option>
-              <option value="Other">Other</option>
-            </select>
-          </div>
-          
+
           <div className="form-group">
             <label htmlFor="password">Password</label>
             <input
@@ -139,7 +152,7 @@ const CitizenRegister = () => {
               required
             />
           </div>
-          
+
           <div className="form-group">
             <label htmlFor="confirmPassword">Confirm Password</label>
             <input
@@ -151,12 +164,16 @@ const CitizenRegister = () => {
               required
             />
           </div>
-          
-          <button type="submit" className="register-button">Register</button>
+
+          <button type="submit" className="register-button">
+            Register
+          </button>
         </form>
-        
+
         <div className="register-login">
-          <p>Already have an account? <Link to="/citizen-login">Login</Link></p>
+          <p>
+            Have an account? <Link to="/citizen-login">Login</Link>
+          </p>
         </div>
       </div>
     </div>
