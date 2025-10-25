@@ -1,0 +1,135 @@
+/* Police Profile Styles */
+/* src/components/police/PoliceProfile.css */
+
+.profile-container {
+  padding: 2rem;
+  max-width: 800px;
+  margin: 0 auto;
+  margin-top: 80px;
+}
+
+.profile-title {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #0a2342; /* Deep navy blue */
+}
+
+.profile-card {
+  background-color: #f8f9fc;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(10, 35, 66, 0.2);
+  overflow: hidden;
+  border: 1px solid #d1d9e6;
+}
+
+.profile-header {
+  display: flex;
+  align-items: center;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, #0a2342, #19376d);
+  border-bottom: 2px solid #102a54;
+  color: white;
+}
+
+.profile-avatar {
+  margin-right: 1.5rem;
+}
+
+.avatar-image {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 3px solid #ffffff;
+  object-fit: cover;
+}
+
+.avatar-placeholder {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-color: #19376d;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  font-weight: bold;
+  border: 2px solid #fff;
+}
+
+.profile-info {
+  flex: 1;
+}
+
+.profile-name {
+  margin: 0 0 0.3rem 0;
+  font-size: 1.6rem;
+  color: #ffffff;
+}
+
+.profile-type {
+  margin: 0;
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #b0c4de;
+}
+
+.profile-details {
+  padding: 1.5rem;
+}
+
+.detail-row {
+  display: flex;
+  padding: 1rem 0;
+  border-bottom: 1px solid #e0e4ef;
+}
+
+.detail-row:last-child {
+  border-bottom: none;
+}
+
+.detail-label {
+  width: 160px;
+  font-weight: 600;
+  color: #0a2342;
+}
+
+.detail-value {
+  flex: 1;
+  color: #333;
+}
+
+/* Hover effect for better interactivity */
+.detail-row:hover {
+  background-color: #eef2f8;
+  transition: background-color 0.3s ease;
+}
+
+@media (max-width: 768px) {
+  .profile-container {
+    padding: 1rem;
+    margin-top: 60px;
+  }
+
+  .profile-header {
+    flex-direction: column;
+    text-align: center;
+    padding: 1rem;
+  }
+
+  .profile-avatar {
+    margin-right: 0;
+    margin-bottom: 1rem;
+  }
+
+  .detail-row {
+    flex-direction: column;
+    padding: 0.75rem 0;
+  }
+
+  .detail-label {
+    width: 100%;
+    margin-bottom: 0.25rem;
+  }
+}

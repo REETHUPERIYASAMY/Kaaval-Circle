@@ -27,6 +27,7 @@ import AnalyticsDashboard from './components/police/AnalyticsDashboard';
 
 // Common Components
 import LandingPage from './components/common/LandingPage';
+import PoliceProfile from './components/police/PoliceProfile';
 
 function App() {
   return (
@@ -125,6 +126,15 @@ function App() {
             } 
           />
           
+          <Route 
+            path="/police-profile" 
+            element={
+              <PrivateRoute userType="police">
+                <PoliceProfile />
+              </PrivateRoute>
+            } 
+          />
+
           <Route 
             path="/analytics" 
             element={
