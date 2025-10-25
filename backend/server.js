@@ -4,6 +4,8 @@ const cors = require('cors');
 const http = require('http');
 const socketIo = require('socket.io');
 const dotenv = require('dotenv');
+const path = require('path');
+const fs = require('fs');
 const connectDB = require('./config/db');
 
 // Load environment variables
@@ -36,9 +38,20 @@ io.on('connection', (socket) => {
   });
 });
 
+// Create uploads directory if it doesn't exist
+const uploadsDir = path.join(__dirname, 'uploads');
+if (!fs.existsSync(uploadsDir)) {
+  fs.mkdirSync(uploadsDir, { recursive: true });
+  console.log('Created uploads directory');
+}
+
 // Middlewares
 app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true })); // For form data
+
+// Serve static files from uploads directory
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Routes
 app.use('/api/auth', require('./routes/authRoutes'));
