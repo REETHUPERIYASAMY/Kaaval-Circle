@@ -236,35 +236,62 @@
   border-radius: 8px;
   overflow: hidden;
   position: relative;
+  cursor: crosshair;
 }
 
-.map-placeholder {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background-color: #f5f5f5;
-  color: #666;
-  position: relative;
-}
-
-.map-placeholder::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
+.map-container iframe {
   width: 100%;
   height: 100%;
-  background-image: url('https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/80.2707,13.0827,14/800x400@2x?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw');
-  background-size: cover;
-  background-position: center;
-  opacity: 0.8;
+  border: none;
+  pointer-events: none;
 }
 
-.map-placeholder > * {
-  position: relative;
-  z-index: 1;
+.location-marker {
+  position: absolute;
+  transform: translate(-50%, -100%);
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.marker-dot {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 3px solid white;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
+
+.user-location .marker-dot {
+  background-color: #3498db;
+}
+
+.selected-location .marker-dot {
+  background-color: #e74c3c;
+}
+
+.marker-label {
+  margin-top: 5px;
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  white-space: nowrap;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+.location-info {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.location-info p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #34495E;
 }
 
 .map-instructions {
@@ -276,9 +303,13 @@
 }
 
 .map-instructions p {
-  margin: 0;
+  margin: 0 0 0.8rem 0;
   font-size: 0.9rem;
   color: #34495E;
+}
+
+.map-instructions p:last-child {
+  margin-bottom: 0;
 }
 
 @media (max-width: 968px) {
