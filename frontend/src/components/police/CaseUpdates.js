@@ -18,6 +18,8 @@ const CaseUpdates = () => {
         const response = await getComplaints();
         if (response.success) {
           setComplaints(response.data);
+        } else {
+          console.error("Failed to fetch complaints:", response.message);
         }
       } catch (err) {
         console.error('Failed to fetch complaints', err);
@@ -57,13 +59,12 @@ const CaseUpdates = () => {
     try {
       const response = await updateComplaintStatus(selectedComplaint._id, newStatus);
       if (response.success) {
-        // Update the local state
         setComplaints(complaints.map(c => 
           c._id === selectedComplaint._id ? response.data : c
         ));
         setDialogOpen(false);
       } else {
-        alert('Failed to update case status');
+        alert(response.message || 'Failed to update case status');
       }
     } catch (err) {
       alert('Failed to update case status');

@@ -1,11 +1,37 @@
-// backend/controllers/complaintController.js
 const Complaint = require('../models/Complaint');
 const User = require('../models/User');
 const generatePDF = require('../utils/generatePDF');
 
 exports.createComplaint = async (req, res) => {
   try {
+    console.log('Creating complaint with data:', req.body);
+    
     const { description, category, location, evidence } = req.body;
+    
+    // Validate required fields
+    if (!description || !category || !location || !location.address) {
+      return res.status(400).json({
+        success: false,
+        message: 'Please provide all required fields: description, category, location with address',
+      });
+    }
+    
+    // Validate location coordinates
+    if (!location.latitude || !location.longitude) {
+      return res.status(400).json({
+        success: false,
+        message: 'Please provide valid location coordinates (latitude and longitude)',
+      });
+    }
+    
+    // Check if user exists
+    const user = await User.findById(req.user.id);
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: 'User not found',
+      });
+    }
     
     const complaint = new Complaint({
       citizenId: req.user.id,
@@ -16,36 +42,68 @@ exports.createComplaint = async (req, res) => {
         coordinates: [location.longitude, location.latitude],
         address: location.address,
       },
-      evidence,
+      evidence: evidence || [],
     });
 
+    console.log('Saving complaint to database...');
     await complaint.save();
+    console.log('Complaint saved successfully');
     
+    // Populate citizen details before returning
+    const populatedComplaint = await Complaint.findById(complaint._id)
+      .populate('citizenId', 'name phone address');
+    
+    console.log('Generating PDF...');
     // Generate PDF
-    const pdfBuffer = await generatePDF(complaint);
+    let pdfBuffer;
+    try {
+      pdfBuffer = await generatePDF(populatedComplaint);
+      console.log('PDF generated successfully');
+    } catch (pdfError) {
+      console.error('Error generating PDF:', pdfError);
+      // If PDF generation fails, we still want to save the complaint but inform the user
+      return res.status(201).json({
+        success: true,
+        data: populatedComplaint,
+        pdf: null,
+        warning: 'Complaint saved successfully but PDF generation failed. Please try downloading later.'
+      });
+    }
     
     res.status(201).json({
       success: true,
-      data: complaint,
+      data: populatedComplaint,
       pdf: pdfBuffer.toString('base64'),
     });
   } catch (err) {
-    console.error(err.message);
+    console.error('Error creating complaint:', err);
+    
+    // Handle specific errors
+    if (err.name === 'ValidationError') {
+      const messages = Object.values(err.errors).map(val => val.message);
+      return res.status(400).json({
+        success: false,
+        message: messages.join(', ')
+      });
+    }
+    
     res.status(500).json({
       success: false,
-      message: 'Server Error',
+      message: 'Server Error: ' + err.message,
     });
   }
 };
-
 exports.getComplaints = async (req, res) => {
   try {
     let complaints;
     
     if (req.user.userType === 'citizen') {
-      complaints = await Complaint.find({ citizenId: req.user.id }).populate('assignedTo', 'name stationName');
+      complaints = await Complaint.find({ citizenId: req.user.id })
+        .populate('assignedTo', 'name stationName');
     } else {
-      complaints = await Complaint.find().populate('citizenId', 'name phone address').populate('assignedTo', 'name stationName');
+      complaints = await Complaint.find()
+        .populate('citizenId', 'name phone address')
+        .populate('assignedTo', 'name stationName');
     }
     
     res.status(200).json({
@@ -81,9 +139,14 @@ exports.updateComplaintStatus = async (req, res) => {
     
     await complaint.save();
     
+    // Populate details before returning
+    const updatedComplaint = await Complaint.findById(complaint._id)
+      .populate('citizenId', 'name phone address')
+      .populate('assignedTo', 'name stationName');
+    
     res.status(200).json({
       success: true,
-      data: complaint,
+      data: updatedComplaint,
     });
   } catch (err) {
     console.error(err.message);

@@ -1,4 +1,3 @@
-// src/components/citizen/ReportCrime.js
 import React, { useState, useEffect } from "react";
 import { createComplaint } from "../../services/api";
 import "./ReportCrime.css";
@@ -172,56 +171,82 @@ const ReportCrime = () => {
     }
     setShowFullScreenMap(false);
   };
+// src/components/citizen/ReportCrime.js
+const onSubmit = async (e) => {
+  e.preventDefault();
 
-  const onSubmit = async (e) => {
-    e.preventDefault();
+  if (!selectedLocation) {
+    alert("Please select a location on the map");
+    return;
+  }
 
-    if (!selectedLocation) {
-      alert("Please select a location on the map");
-      return;
-    }
+  if (!location.address) {
+    alert("Please enter the address");
+    return;
+  }
 
-    if (!location.address) {
-      alert("Please enter the address");
-      return;
-    }
+  setIsSubmitting(true);
 
-    setIsSubmitting(true);
+  try {
+    console.log("Submitting complaint with data:", formData);
+    const result = await createComplaint(formData);
+    console.log("Complaint submission result:", result);
 
-    try {
-      const result = await createComplaint(formData);
-
-      if (result.success) {
-        alert("Complaint submitted successfully");
+    if (result.success) {
+      alert("Complaint submitted successfully");
+      
+      // Check if PDF was generated
+      if (result.pdf) {
         // Download PDF
         const link = document.createElement("a");
         link.href = `data:application/pdf;base64,${result.pdf}`;
         link.download = `complaint-${result.data._id}.pdf`;
         link.click();
-
-        // Reset form
-        setFormData({
-          description: "",
-          category: "",
-          location: {
-            latitude: 0,
-            longitude: 0,
-            address: "",
-          },
-          evidence: [],
-        });
-        setSelectedLocation(null);
-        setTempSelectedLocation(null);
-      } else {
-        alert(result.message || "Failed to submit complaint");
+      } else if (result.warning) {
+        alert(result.warning);
       }
-    } catch (err) {
-      alert("Failed to submit complaint");
+
+      // Reset form
+      setFormData({
+        description: "",
+        category: "",
+        location: {
+          latitude: 0,
+          longitude: 0,
+          address: "",
+        },
+        evidence: [],
+      });
+      setSelectedLocation(null);
+      setTempSelectedLocation(null);
+    } else {
+      alert(result.message || "Failed to submit complaint");
     }
+  } catch (err) {
+    console.error("Error submitting complaint:", err);
+    
+    // Extract error message from the error response
+    let errorMessage = "Failed to submit complaint";
+    if (err.response) {
+      // The request was made and the server responded with a status code
+      // that falls out of the range of 2xx
+      errorMessage = err.response.data.message || errorMessage;
+      console.log("Error response data:", err.response.data);
+    } else if (err.request) {
+      // The request was made but no response was received
+      errorMessage = "No response from server. Please check your internet connection.";
+      console.log("Error request:", err.request);
+    } else {
+      // Something happened in setting up the request that triggered an Error
+      errorMessage = err.message || errorMessage;
+      console.log("Error message:", err.message);
+    }
+    
+    alert("Error: " + errorMessage);
+  }
 
-    setIsSubmitting(false);
-  };
-
+  setIsSubmitting(false);
+};
   const handleEvidenceUpload = (e) => {
     // In a real app, this would handle file uploads
     const files = Array.from(e.target.files);

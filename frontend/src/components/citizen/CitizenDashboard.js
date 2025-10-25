@@ -1,6 +1,6 @@
-// src/components/citizen/CitizenDashboard.js
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { getComplaints } from '../../services/api';
 import './CitizenDashboard.css';
 
 const CitizenDashboard = () => {
@@ -10,17 +10,61 @@ const CitizenDashboard = () => {
     inProgressComplaints: 0,
     resolvedComplaints: 0
   });
+  const [loading, setLoading] = useState(true);
+  const [recentComplaints, setRecentComplaints] = useState([]);
 
   useEffect(() => {
-    // Simulate fetching data
-    // In a real app, this would be an API call
-    setStats({
-      totalComplaints: 5,
-      pendingComplaints: 2,
-      inProgressComplaints: 2,
-      resolvedComplaints: 1
-    });
+    const fetchDashboardData = async () => {
+      try {
+        const response = await getComplaints();
+        if (response.success) {
+          const complaints = response.data;
+          
+          // Calculate stats
+          setStats({
+            totalComplaints: complaints.length,
+            pendingComplaints: complaints.filter(c => c.status === 'Pending').length,
+            inProgressComplaints: complaints.filter(c => c.status === 'In Progress').length,
+            resolvedComplaints: complaints.filter(c => c.status === 'Closed').length
+          });
+          
+          // Get recent complaints (last 3)
+          const sortedComplaints = [...complaints].sort(
+            (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+          );
+          setRecentComplaints(sortedComplaints.slice(0, 3));
+        }
+      } catch (err) {
+        console.error('Failed to fetch dashboard data', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchDashboardData();
   }, []);
+
+  const formatDate = (dateString) => {
+    const options = { year: 'numeric', month: 'short', day: 'numeric' };
+    return new Date(dateString).toLocaleDateString(undefined, options);
+  };
+
+  const getStatusColor = (status) => {
+    switch (status) {
+      case 'Pending':
+        return 'status-pending';
+      case 'In Progress':
+        return 'status-progress';
+      case 'Closed':
+        return 'status-closed';
+      default:
+        return '';
+    }
+  };
+
+  if (loading) {
+    return <div className="loading">Loading dashboard...</div>;
+  }
 
   return (
     <div className="dashboard-container">
@@ -69,7 +113,23 @@ const CitizenDashboard = () => {
       <div className="dashboard-recent">
         <h2 className="section-title">Recent Complaints</h2>
         <div className="complaint-list">
-          <p>No recent complaints to display.</p>
+          {recentComplaints.length > 0 ? (
+            recentComplaints.map((complaint) => (
+              <div key={complaint._id} className="recent-complaint">
+                <div className="complaint-header">
+                  <div className="complaint-id">ID: {complaint._id.substring(0, 8)}</div>
+                  <span className={`status-badge ${getStatusColor(complaint.status)}`}>
+                    {complaint.status}
+                  </span>
+                </div>
+                <div className="complaint-category">{complaint.category}</div>
+                <div className="complaint-date">{formatDate(complaint.createdAt)}</div>
+                <div className="complaint-location">{complaint.location.address}</div>
+              </div>
+            ))
+          ) : (
+            <p>No recent complaints to display.</p>
+          )}
         </div>
       </div>
       

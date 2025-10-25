@@ -1,7 +1,6 @@
-// src/components/police/PoliceDashboard.js
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { getDashboardStats } from '../../services/api';
+import { getComplaints } from '../../services/api';
 import './PoliceDashboard.css';
 
 const PoliceDashboard = () => {
@@ -12,13 +11,28 @@ const PoliceDashboard = () => {
     avgResponseTime: 0
   });
   const [loading, setLoading] = useState(true);
+  const [recentComplaints, setRecentComplaints] = useState([]);
 
   useEffect(() => {
     const fetchDashboardData = async () => {
       try {
-        const response = await getDashboardStats();
+        const response = await getComplaints();
         if (response.success) {
-          setStats(response.data);
+          const complaints = response.data;
+          
+          // Calculate stats
+          setStats({
+            totalComplaints: complaints.length,
+            activeSOS: 0, // Would need SOS API for real data
+            pendingComplaints: complaints.filter(c => c.status === 'Pending').length,
+            avgResponseTime: 24 // Placeholder value
+          });
+          
+          // Get recent complaints (last 5)
+          const sortedComplaints = [...complaints].sort(
+            (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+          );
+          setRecentComplaints(sortedComplaints.slice(0, 5));
         }
       } catch (err) {
         console.error('Failed to fetch dashboard data', err);
@@ -29,6 +43,24 @@ const PoliceDashboard = () => {
 
     fetchDashboardData();
   }, []);
+
+  const formatDate = (dateString) => {
+    const options = { year: 'numeric', month: 'short', day: 'numeric' };
+    return new Date(dateString).toLocaleDateString(undefined, options);
+  };
+
+  const getStatusColor = (status) => {
+    switch (status) {
+      case 'Pending':
+        return 'status-pending';
+      case 'In Progress':
+        return 'status-progress';
+      case 'Closed':
+        return 'status-closed';
+      default:
+        return '';
+    }
+  };
 
   if (loading) {
     return <div className="loading">Loading dashboard...</div>;
@@ -81,7 +113,26 @@ const PoliceDashboard = () => {
       <div className="dashboard-recent">
         <h2 className="section-title">Recent Complaints</h2>
         <div className="complaint-list">
-          <p>No recent complaints to display.</p>
+          {recentComplaints.length > 0 ? (
+            recentComplaints.map((complaint) => (
+              <div key={complaint._id} className="recent-complaint">
+                <div className="complaint-header">
+                  <div className="complaint-id">ID: {complaint._id.substring(0, 8)}</div>
+                  <span className={`status-badge ${getStatusColor(complaint.status)}`}>
+                    {complaint.status}
+                  </span>
+                </div>
+                <div className="complaint-category">{complaint.category}</div>
+                <div className="complaint-citizen">
+                  {complaint.citizenId?.name || 'Unknown Citizen'}
+                </div>
+                <div className="complaint-date">{formatDate(complaint.createdAt)}</div>
+                <div className="complaint-location">{complaint.location.address}</div>
+              </div>
+            ))
+          ) : (
+            <p>No recent complaints to display.</p>
+          )}
         </div>
       </div>
       
