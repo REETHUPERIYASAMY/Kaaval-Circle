@@ -101,7 +101,7 @@ const handleSendSOS = async () => {
     console.log('SOS result:', result);
 
     if (result.success) {
-      alert('SOS alert sent successfully! Help is on the way.');
+      alert('SOS alert sent successfully!! Help is on the way.');
       handleClose();
     } else {
       setError(result.message || 'Failed to send SOS alert');

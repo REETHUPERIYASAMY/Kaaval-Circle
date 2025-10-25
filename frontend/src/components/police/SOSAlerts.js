@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from "react";
 import { getSOSAlerts, updateSOSStatus } from "../../services/api";
 import "./SOSAlerts.css";
-import io from 'socket.io-client';
 
 
 const SOSAlerts = () => {
