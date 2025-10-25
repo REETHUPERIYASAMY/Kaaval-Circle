@@ -36,6 +36,36 @@ exports.createComplaint = async (req, res) => {
       });
     }
 
+    // Process evidence if it exists
+    let processedEvidence = [];
+    if (evidence && evidence.length > 0) {
+      console.log("Processing evidence:", evidence);
+      
+      // If evidence is an array of base64 strings
+      processedEvidence = evidence.map(item => {
+        // If it's already a data URL, store as is
+        if (item.startsWith('data:')) {
+          return item;
+        }
+        
+        // If it's just base64 data, try to determine the type
+        const signature = item.substring(0, 20).toLowerCase();
+        let imageType = 'jpeg'; // default
+        
+        if (signature.includes('ivbor') || signature.includes('png')) {
+          imageType = 'png';
+        } else if (signature.includes('qk2') || signature.includes('bmp')) {
+          imageType = 'bmp';
+        } else if (signature.includes('webp')) {
+          imageType = 'webp';
+        }
+        
+        return `data:image/${imageType};base64,${item}`;
+      });
+      
+      console.log("Processed evidence:", processedEvidence);
+    }
+
     const complaint = new Complaint({
       citizenId: req.user.id,
       description,
@@ -45,7 +75,7 @@ exports.createComplaint = async (req, res) => {
         coordinates: [location.longitude, location.latitude],
         address: location.address,
       },
-      evidence: evidence || [],
+      evidence: processedEvidence,
     });
 
     console.log('Saving complaint to database...');
@@ -73,26 +103,12 @@ exports.createComplaint = async (req, res) => {
       });
     }
 
-    // Option A: Return inline base64 (frontend already handles this)
+    // Return inline base64
     return res.status(201).json({
       success: true,
       data: populatedComplaint,
       pdf: pdfBuffer.toString('base64'),
     });
-
-    // --- Option B: (Alternative) Save PDF on server and return a URL
-    // Uncomment below if you prefer to save the pdf file on server instead of inline base64.
-    /*
-    const pdfDir = path.join(__dirname, '..', 'pdfs');
-    if (!fs.existsSync(pdfDir)) fs.mkdirSync(pdfDir, { recursive: true });
-    const filePath = path.join(pdfDir, `complaint-${complaint._id}.pdf`);
-    fs.writeFileSync(filePath, pdfBuffer);
-    return res.status(201).json({
-      success: true,
-      data: populatedComplaint,
-      pdfUrl: `/pdfs/complaint-${complaint._id}.pdf`
-    });
-    */
 
   } catch (err) {
     console.error('Error creating complaint:', err);
@@ -125,6 +141,11 @@ exports.getComplaints = async (req, res) => {
         .populate('citizenId', 'name phone address')
         .populate('assignedTo', 'name stationName');
     }
+
+    console.log("Retrieved complaints:", complaints.length);
+    complaints.forEach(complaint => {
+      console.log(`Complaint ${complaint._id} has evidence:`, complaint.evidence ? complaint.evidence.length : 0);
+    });
 
     res.status(200).json({
       success: true,

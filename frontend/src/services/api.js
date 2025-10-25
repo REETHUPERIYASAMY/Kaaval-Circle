@@ -57,7 +57,7 @@ export const getComplaints = async () => {
 };
 
 export const updateComplaintStatus = async (id, status) => {
-  const response = await api.put(`/complaints/${id}`, { status });
+  const response = await api.patch(`/complaints/${id}/status`, { status });
   return response.data;
 };
 
@@ -73,7 +73,7 @@ export const getSOSAlerts = async () => {
 };
 
 export const updateSOSStatus = async (id, status) => {
-  const response = await api.put(`/sos/${id}`, { status });
+  const response = await api.patch(`/sos/${id}/status`, { status });
   return response.data;
 };
 
@@ -85,6 +85,16 @@ export const getDashboardStats = async () => {
 
 export const getCrimeHotspots = async (lat, lng) => {
   const response = await api.get(`/analytics/hotspots?lat=${lat}&lng=${lng}`);
+  return response.data;
+};
+
+export const getCrimeCategories = async () => {
+  const response = await api.get('/analytics/categories');
+  return response.data;
+};
+
+export const getMonthlyTrends = async () => {
+  const response = await api.get('/analytics/monthly-trends');
   return response.data;
 };
 
